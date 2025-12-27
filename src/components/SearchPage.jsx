@@ -23,9 +23,9 @@ const SearchPage = () => {
     maxPrice: "",
     minBedrooms: "",
     maxBedrooms: "",
-    addedMonth: "",
-    addedYear: "",
-    postcode: "",
+    startDate: "",
+    endDate: "",
+    postcodeArea: "",
   });
 
   const [properties, setProperties] = useState([]);
@@ -57,25 +57,38 @@ const SearchPage = () => {
     }));
   };
 
-  const validateFilters = () => {
-    if (
-      filters.minPrice < 0 ||
-      filters.maxPrice < 0 ||
-      filters.minBedrooms < 0 ||
-      filters.maxBedrooms < 0 ||
-      filters.addedYear < 0
-    ) {
-      alert("Values cannot be negative.");
+const validateFilters = () => {
+    // 1. Prevent negative numbers for all numeric fields
+    const numericFields = ['minPrice', 'maxPrice', 'minBedrooms', 'maxBedrooms'];
+    for (let field of numericFields) {
+      if (filters[field] < 0) {
+        alert(`${field.replace(/([A-Z])/g, ' $1')} cannot be negative.`);
+        return false;
+      }
+    }
+
+    // 2. Logic: Min should not be greater than Max
+    if (filters.minPrice && filters.maxPrice && parseInt(filters.minPrice) > parseInt(filters.maxPrice)) {
+      alert("Minimum price cannot be higher than maximum price.");
       return false;
     }
-    if (filters.minPrice > filters.maxPrice) {
-      alert("Min Price cannot be greater than Max Price.");
+
+    if (filters.minBedrooms && filters.maxBedrooms && parseInt(filters.minBedrooms) > parseInt(filters.maxBedrooms)) {
+      alert("Minimum bedrooms cannot be more than maximum bedrooms.");
       return false;
     }
-    if (filters.minBedrooms > filters.maxBedrooms) {
-      alert("Min Bedrooms cannot be greater than Max Bedrooms.");
-      return false;
+
+    // 3. Date Validation: Ensure the start date is before the end date
+    if (filters.startDate && filters.endDate) {
+      const start = new Date(filters.startDate);
+      const end = new Date(filters.endDate);
+      
+      if (start > end) {
+        alert("The 'Added After' date cannot be later than the 'Added Before' date.");
+        return false;
+      }
     }
+
     return true;
   };
 
@@ -96,13 +109,15 @@ const SearchPage = () => {
         !filters.minBedrooms || property.bedrooms >= parseInt(filters.minBedrooms, 10);
       const matchesMaxBedrooms =
         !filters.maxBedrooms || property.bedrooms <= parseInt(filters.maxBedrooms, 10);
-      const matchesAddedMonth =
-        !filters.addedMonth || property.added.month.toLowerCase() === filters.addedMonth.toLowerCase();
-      const matchesAddedYear =
-        !filters.addedYear || property.added.year.toString() === filters.addedYear;
+      const matchespropertyDate = new Date(
+        property.added.year, getMonthIndex(property.added.month), property.added.day
+      );
+      const matchesStartDate = !filters.startDate || propertyDate >= new Date(filters.startDate);
+      const matchEndDate = !filters.endDate || propertyDate <= new Date(filters.endDate);
+
       const matchesPostcode =
-        !filters.postcode ||
-        property.location.toLowerCase().includes(filters.postcode.toLowerCase());
+        !filters.postcodeArea ||
+        property.postcode.toLowerCase().startsWith(filters.postcodeArea.toLowerCase());
 
       return (
         matchesType &&
@@ -110,11 +125,15 @@ const SearchPage = () => {
         matchesMaxPrice &&
         matchesMinBedrooms &&
         matchesMaxBedrooms &&
-        matchesAddedMonth &&
-        matchesAddedYear &&
-        matchesPostcode
+        matchesStartDate &&
+        matchesEndDate &&
+        matchesPostcodeArea
       );
     });
+
+    function getMonthIndex(monthName) {
+      return new Date(Date.parse(monthName + "1, 2025")).getMonth();
+    }
 
     setFilteredProperties(filtered);
   };
