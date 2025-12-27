@@ -21,12 +21,12 @@
 }
 
 .warning-content h3 {
-  color: #404ce8;
+  color: var(--primary-blue);
   margin-bottom: 1rem;
 }
 
 .warning-confirm-btn {
-  background: #404ce8;
+  background: var(--primary-blue);
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -37,5 +37,5 @@
 }
 
 .warning-confirm-btn:hover {
-  background: #404ce8;
+  background: var(--primary-blue);
 }
