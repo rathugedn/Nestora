@@ -7,11 +7,12 @@ const HomePage = () => {
     <div className="home-container">
       <section className="hero-section">
         <div className="hero-content">
-          <h1>Discover Your <span>Perfect Home</span></h1>
-          <p>Find modern properties tailored to your lifestyle with our curated selection of premium homes.</p>
-          <div className="hero-buttons">
+          <h1>Elivate Your <span classname="Luxury-gradient">Living Experience</span></h1>
+          <p>Discover premium properties tailored to your lifestyle with our curated selection of modern homes. </p>        
+            <div className="hero-buttons">
             <Link to="/search" className="primary-btn">Browse Properties</Link>
             <Link to="/contact" className="secondary-btn">Contact Agent</Link>
+            
           </div>
         </div>
         <div className="hero-image">
@@ -19,7 +20,7 @@ const HomePage = () => {
         </div>
       </section>
       
-      <section className="features-section">
+       <section className="features-section">
         <div className="features-container">
           <div className="feature-card">
             <div className="feature-icon">🏡</div>
