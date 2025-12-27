@@ -13,7 +13,7 @@
 
 .contact-subtitle {
   text-align: center;
-  color: #666;
+  color: #333334;
   margin-bottom: 3rem;
   font-size: 1.2rem;
 }
@@ -26,7 +26,7 @@
 }
 
 .agent-card {
-  background: white;
+  background: rgb(174, 211, 245);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -69,7 +69,7 @@
 }
 
 .agent-title {
-  color: #666;
+  color: #272626;
   margin-bottom: 1rem;
   font-weight: 500;
 }
@@ -100,7 +100,7 @@
 }
 
 .contact-form-section {
-  background: white;
+  background: rgb(255, 255, 255);
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
@@ -128,7 +128,7 @@
 .form-group textarea {
   width: 100%;
   padding: 0.8rem;
-  border: 1px solid #ddd;
+  border: 1px solid #070707;
   border-radius: 8px;
   font-family: inherit;
   font-size: 1rem;
