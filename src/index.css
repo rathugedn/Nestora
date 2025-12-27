@@ -10,7 +10,8 @@
 body {
   font-family: 'Poppins', sans-serif;
   background-color: #f9f6ff;
-  color: #333;
+  --primary-blue: #1e40af; /* site-wide primary blue */
+  color: var(--primary-blue);
   line-height: 1.6;
 }
 
