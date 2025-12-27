@@ -11,7 +11,7 @@ const ContactAgent = () => {
             <div className="contact-cards">
                 <div className="agent-card">
                     <div className="agent-image">
-                        <img src="C:\Users\USER\Desktop\nestora\src\components\Agents\olivia.jpg" alt="Agent Olivia Parker" />  
+                        <img src=".\Agents\olivia.jpg" alt="Agent Olivia Parker" />  
                     </div>
                     <div className="agent-info">
                         <h3>Olivia Parker</h3>
@@ -27,7 +27,7 @@ const ContactAgent = () => {
 
                 <div className="agent-card">
                     <div className="agent-image">
-                        <img src="C:\Users\USER\Desktop\nestora\src\components\Agents\ethan.jpg" alt="Ethan Brooks" />
+                        <img src="C:\Users\USER\Desktop\nestora cw\Nestora\src\ethan.jpg" alt="Ethan Brooks" />
                         </div>
                         <div className="agent-info">
                             <h3>Ethan Brooks</h3>
