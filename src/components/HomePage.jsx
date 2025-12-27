@@ -5,22 +5,38 @@ import './HomePage.css';
 const HomePage = () => {
   return (
     <div className="home-container">
-      <section className="hero-section">
-        <div className="hero-content">
-          <h1>Elivate Your <span classname="Luxury-gradient">Living Experience</span></h1>
-          <p>Discover premium properties tailored to your lifestyle with our curated selection of modern homes. </p>        
+      <section className="hero-section split-layout">
+        <div className="hero-left">
+          <div className="hero-content">
+            <h1>
+              Elevate Your <span className="luxury-gradient">Living Experience</span>
+            </h1>
+            <p>
+              Discover premium properties tailored to your lifestyle with our curated
+              selection of modern homes.
+            </p>
+
             <div className="hero-buttons">
-            <Link to="/search" className="primary-btn">Browse Properties</Link>
-            <Link to="/contact" className="secondary-btn">Contact Agent</Link>
-            
+              <Link to="/search" className="primary-btn">Browse Properties</Link>
+              <Link to="/contact" className="secondary-btn">Contact Agent</Link>
+            </div>
           </div>
         </div>
-        <div className="hero-image">
-          <img src="/property.jpg" alt="Modern Home" />
+
+        <div className="hero-right">
+          <div className="image-stack single">
+            <div className="image-card large">
+              <img src="/property.jpg" alt="Modern Home" />
+              <div className="card-overlay">
+                <h4>Modern Villa</h4>
+                <Link to="/property/1" className="card-link">View</Link>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
-      
-       <section className="features-section">
+
+      <section className="features-section">
         <div className="features-container">
           <div className="feature-card">
             <div className="feature-icon">🏡</div>
