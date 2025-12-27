@@ -8,7 +8,7 @@
 }
 
 .contact-form-container h1 {
-  color: #404ce8;
+  color: var(--primary-blue);
   text-align: center;
   margin-bottom: 0.5rem;
 }
@@ -49,7 +49,7 @@
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #404ce8;
+  border-color: var(--primary-blue);
   box-shadow: 0 0 0 2px rgba(106, 76, 147, 0.2);
 }
 
@@ -74,7 +74,7 @@
 }
 
 .submit-btn {
-  background: #404ce8;
+  background: var(--primary-blue);
   color: white;
   border: none;
   padding: 1rem;
@@ -87,7 +87,7 @@
 }
 
 .submit-btn:hover {
-  background: #404ce8;
+  background: var(--primary-blue);
   transform: translateY(-2px);
 }
 
@@ -106,7 +106,7 @@
 }
 
 .success-message h2 {
-  color: #404ce8;
+  color: var(--primary-blue);
   margin-bottom: 1rem;
 }
 
