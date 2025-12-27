@@ -23,9 +23,11 @@ const Navbar = ({ favouritesCount = 0 }) => {
             <span>Home</span>
           </Link>
           <Link to="/search" className="nav-link" onClick={() => setMobileMenuOpen(false)}>
-            <Search size={18} />
-            <span>Browse</span>
+            <span>Properties</span>
           </Link>
+          <Link to="/contact" className="nav-link" onClick={() => setMobileMenuOpen(false)}>
+            <span>Contact </span>
+            </Link>
         </div>
         
         <button className="mobile-menu-btn" onClick={toggleMobileMenu} aria-label="Toggle menu">
