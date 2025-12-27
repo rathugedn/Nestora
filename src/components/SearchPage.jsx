@@ -168,7 +168,7 @@ const validateFilters = () => {
 
   return (
     <Box sx={{ padding: "20px", maxWidth: "1400px", margin: "0 auto" }}>
-      <Typography variant="h4" align="center" gutterBottom sx={{ color: "#6a4c93", fontWeight: "bold", marginBottom: "2rem" }}>
+      <Typography variant="h4" align="center" gutterBottom sx={{ color: "#1e40af", fontWeight: "bold", marginBottom: "2rem" }}>
         Search Your Dream Home
       </Typography>
       
@@ -183,7 +183,7 @@ const validateFilters = () => {
         }}
         onSubmit={handleSearch}
       >
-        <Grid container spacing={2}>
+        <Grid container spacing={2} className="favourites-grid">
           <Grid item xs={12} md={4}>
             <TextField
               label="Property Type"
@@ -297,7 +297,7 @@ const validateFilters = () => {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
-        <Typography variant="h5" gutterBottom sx={{ color: "#6a4c93", fontWeight: "bold" }}>
+        <Typography variant="h5" gutterBottom sx={{ color: "#1e40af", fontWeight: "bold" }}>
           Favourites
         </Typography>
         <Button
@@ -321,23 +321,28 @@ const validateFilters = () => {
           {favourites.map((property) => (
             <Grid item xs={12} sm={6} md={4} key={property.id}>
               <Card className="property-card">
-                <CardMedia
-                  component="img"
-                  height="140"
-                  image={property.picture}
-                  alt="Property"
-                />
+                <div className="card-media-wrapper">
+                  CardMedia
+                    component="img"
+                    height="220"
+                    image={property.picture}
+                    alt="Property"
+                  />
+                  <div className="price-badge">Rs. {property.price.toLocaleString()}m</div>
+                  <div className="type-badge">{property.type}</div>
+                </div>
                 <CardContent>
-                  <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                    Rs. {property.price.toLocaleString()} millions
+                  <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                    {property.short}
                   </Typography>
-                  <Typography>{property.short}</Typography>
-                  <IconButton
-                    onClick={() => removeFavourite(property.id)}
-                    color="error"
-                  >
-                    <Trash />
-                  </IconButton>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
+                    <IconButton
+                      onClick={() => removeFavourite(property.id)}
+                      color="error"
+                    >
+                      <Trash />
+                    </IconButton>
+                  </div>
                 </CardContent>
               </Card>
             </Grid>
@@ -347,10 +352,10 @@ const validateFilters = () => {
 
       <Divider sx={{ marginY: "20px", borderColor: "#ddd" }} />
 
-      <Typography variant="h5" gutterBottom sx={{ color: "#6a4c93", fontWeight: "bold" }}>
+      <Typography variant="h5" gutterBottom sx={{ color: "#1e40af", fontWeight: "bold" }}>
         Search Results
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} className="properties-grid">
         {filteredProperties.map((property) => (
           <Grid
             item
@@ -362,44 +367,49 @@ const validateFilters = () => {
             onDragStart={(e) => handleDragStart(e, property)}
           >
             <Card className="property-card">
-              <CardMedia
-                component="img"
-                height="140"
-                image={property.picture}
-                alt="Property"
-              />
+                <div className="card-media-wrapper">
+                <CardMedia
+                  component="img"
+                  height="220"
+                  image={property.picture}
+                  alt="Property"
+                />
+                <div className="price-badge">Rs. {property.price.toLocaleString()}m</div>
+                <div className="type-badge">{property.type}</div>
+              </div>
               <CardContent>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                  Rs. {property.price.toLocaleString()} millions
+                <Typography variant="body1" sx={{ fontWeight: 700 }}>
+                  {property.short}
                 </Typography>
-                <Typography>{property.short}</Typography>
-                <Box sx={{ display: "flex", alignItems: "center", marginTop: "1rem" }}>
-                  <IconButton
-                    onClick={() => addToFavourites(property)}
-                    sx={{
-                      color: favourites.some((fav) => fav.id === property.id)
-                        ? "#d32f2f"
-                        : "#aaa",
-                    }}
-                  >
-                    <Heart />
-                  </IconButton>
-                  <Button
-                    component={Link}
-                    to={`/property/${property.id}`}
-                    variant="outlined"
-                    sx={{ 
-                      marginLeft: 1,
-                      color: "#6a4c93",
-                      borderColor: "#6a4c93",
-                      '&:hover': {
-                        borderColor: "#5a3d80",
-                        backgroundColor: "rgba(106, 76, 147, 0.1)"
-                      }
-                    }}
-                  >
-                    View Details
-                  </Button>
+                <Box sx={{ display: "flex", alignItems: "center", marginTop: "1rem", justifyContent: 'space-between' }}>
+                  <div>
+                    <IconButton
+                      onClick={() => addToFavourites(property)}
+                      sx={{
+                        color: favourites.some((fav) => fav.id === property.id)
+                          ? "#d32f2f"
+                          : "#aaa",
+                      }}
+                    >
+                      <Heart />
+                    </IconButton>
+                    <Button
+                      component={Link}
+                      to={`/property/${property.id}`}
+                      variant="outlined"
+                      sx={{ 
+                        marginLeft: 1,
+                        color: "#1e40af",
+                        borderColor: "#1e40af",
+                        '&:hover': {
+                          borderColor: "#5a3d80",
+                          backgroundColor: "rgba(106, 76, 147, 0.1)"
+                        }
+                      }}
+                    >
+                      View Details
+                    </Button>
+                  </div>
                 </Box>
               </CardContent>
             </Card>
