@@ -39,41 +39,11 @@ const SearchPage = () => {
     fetch("/properties.json")
       .then((response) => response.json())
       .then((data) => {
-        // add two sample properties so there are always at least two cards
-        const sampleProperties = [
-          {
-            id: "sample1",
-            type: "Flat",
-            bedrooms: 2,
-            bathrooms: 1,
-            area: 2.0,
-            price: 8,
-            short: "Sample Cozy Flat — 2BR",
-            description: "This is a sample property card for testing.",
-            location: "Demo City",
-            picture: "property.jpg",
-            img1: "/property.jpg",
-            added: { month: "December", day: 28, year: 2025 },
-          },
-          {
-            id: "sample2",
-            type: "House",
-            bedrooms: 3,
-            bathrooms: 2,
-            area: 5.0,
-            price: 15,
-            short: "Sample Family House — 3BR",
-            description: "This is a second sample property card for testing.",
-            location: "Demo Town",
-            picture: "prop1pic1small.jpg",
-            img1: "/prop1pic11.jpg",
-            added: { month: "December", day: 28, year: 2025 },
-          },
-        ];
-
-        const allProperties = [...data.properties, ...sampleProperties];
-        setProperties(allProperties);
-        setFilteredProperties(allProperties);
+        // Use properties from the JSON file directly. Remove hard-coded samples so
+        // deleting entries from `public/properties.json` actually updates the UI.
+        const list = (data && data.properties) || [];
+        setProperties(list);
+        setFilteredProperties(list);
       })
       .catch((error) => console.error("Error fetching properties:", error));
   }, []);
@@ -360,7 +330,7 @@ const validateFilters = () => {
                     height="220"
                     image={property.picture}
                     alt="Property"
-                  />
+                  
                   <div className="price-badge">Rs. {property.price.toLocaleString()}m</div>
                   <div className="type-badge">{property.type}</div>
                 </div>
