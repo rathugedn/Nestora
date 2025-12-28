@@ -41,6 +41,7 @@ const PropertyDetails = () => {
           <img src={property.img5} alt="Gallery 5" />
           <img src={property.img6} alt="Gallery 6" />
           <img src={property.img7} alt="Gallery 7" />
+          
         </div>
 
         <div className="property-info">
