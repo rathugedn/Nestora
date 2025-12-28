@@ -14,12 +14,12 @@
 .property-details h1 {
   text-align: center;
   font-size: 2.4rem;
-  color: #6a4c93;
+  color: #4e56f3;
   margin-bottom: 20px;
 }
 
 .back-button {
-  background-color: #6a4c93;
+  background-color: #4e56f3;
   color: #fff;
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
@@ -32,7 +32,7 @@
 }
 
 .back-button:hover {
-  background-color: #5a3d80;
+  background-color: #4e56f3;
   transform: translateY(-2px);
 }
 
@@ -79,7 +79,7 @@
 
 .property-info p span {
   font-weight: bold;
-  color: #6a4c93;
+  color: #4e56f3;
   font-size: 1.2rem;
 }
 
@@ -94,7 +94,7 @@
   padding: 10px 25px;
   font-size: 1rem;
   font-weight: 600;
-  color: #6a4c93;
+  color: #4e56f3;
   background: #f0e6ff;
   border: none;
   border-radius: 25px;
@@ -103,12 +103,12 @@
 }
 
 .tabs button:hover {
-  background: #6a4c93;
+  background: #4e56f3;
   color: #fff;
 }
 
 .tabs button.active {
-  background: #6a4c93;
+  background: #4e56f3;
   color: #fff;
   box-shadow: 0 3px 8px rgba(106, 76, 147, 0.3);
 }
@@ -139,7 +139,7 @@
   text-align: center;
   padding: 2rem;
   font-size: 1.2rem;
-  color: #6a4c93;
+  color: #4e56f3;
 }
 
 @media (max-width: 768px) {
