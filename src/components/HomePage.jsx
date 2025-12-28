@@ -28,8 +28,6 @@ const HomePage = () => {
             <div className="image-card large">
               <img src="/property.jpg" alt="Modern Home" />
               <div className="card-overlay">
-                <h4>Modern Villa</h4>
-                <Link to="/property/1" className="card-link">View</Link>
               </div>
             </div>
           </div>
