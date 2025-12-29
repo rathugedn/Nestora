@@ -1,22 +1,20 @@
 .properties-grid, .favourites-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  justify-content: center; /* center align property cards */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
 }
-.properties-grid .property-card, .favourites-grid .property-card {
-  width: 320px;
-  flex: 0 0 320px;
-}
+
 .property-card {
-  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  height: 100%;
-  min-height: 380px; /* ensure uniform card size */
-  display: flex;
-  flex-direction: column;
+  transition: all 0.3s ease;
 }
 
 .property-card:hover {
