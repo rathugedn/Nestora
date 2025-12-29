@@ -23,9 +23,9 @@ const SearchPage = () => {
     maxPrice: "",
     minBedrooms: "",
     maxBedrooms: "",
-    startDate: "",
-    endDate: "",
-    postcodeArea: "",
+    addedMonth: "",
+    addedYear: "",
+    postcode: "",
   });
 
   const [properties, setProperties] = useState([]);
@@ -39,11 +39,8 @@ const SearchPage = () => {
     fetch("/properties.json")
       .then((response) => response.json())
       .then((data) => {
-        // Use properties from the JSON file directly. Remove hard-coded samples so
-        // deleting entries from `public/properties.json` actually updates the UI.
-        const list = (data && data.properties) || [];
-        setProperties(list);
-        setFilteredProperties(list);
+        setProperties(data.properties);
+        setFilteredProperties(data.properties);
       })
       .catch((error) => console.error("Error fetching properties:", error));
   }, []);
@@ -60,38 +57,26 @@ const SearchPage = () => {
     }));
   };
 
-const validateFilters = () => {
-    // 1. Prevent negative numbers for all numeric fields
-    const numericFields = ['minPrice', 'maxPrice', 'minBedrooms', 'maxBedrooms'];
-    for (let field of numericFields) {
-      if (filters[field] < 0) {
-        alert(`${field.replace(/([A-Z])/g, ' $1')} cannot be negative.`);
-        return false;
-      }
-    }
-
-    // 2. Logic: Min should not be greater than Max
-    if (filters.minPrice && filters.maxPrice && parseInt(filters.minPrice) > parseInt(filters.maxPrice)) {
-      alert("Minimum price cannot be higher than maximum price.");
+  const validateFilters = () => {
+    if (
+      filters.minPrice < 0 ||
+      filters.maxPrice < 0 ||
+      filters.minBedrooms < 0 ||
+      filters.maxBedrooms < 0 ||
+      filters.addedYear < 0
+    ) {
+      alert("Values cannot be negative.");
       return false;
-    }
-
-    if (filters.minBedrooms && filters.maxBedrooms && parseInt(filters.minBedrooms) > parseInt(filters.maxBedrooms)) {
-      alert("Minimum bedrooms cannot be more than maximum bedrooms.");
-      return false;
-    }
-
-    // 3. Date Validation: Ensure the start date is before the end date
-    if (filters.startDate && filters.endDate) {
-      const start = new Date(filters.startDate);
-      const end = new Date(filters.endDate);
       
-      if (start > end) {
-        alert("The 'Added After' date cannot be later than the 'Added Before' date.");
-        return false;
-      }
     }
-
+    if (filters.minPrice > filters.maxPrice) {
+      alert("Min Price cannot be greater than Max Price.");
+      return false;
+    }
+    if (filters.minBedrooms > filters.maxBedrooms) {
+      alert("Min Bedrooms cannot be greater than Max Bedrooms.");
+      return false;
+    }
     return true;
   };
 
@@ -112,15 +97,13 @@ const validateFilters = () => {
         !filters.minBedrooms || property.bedrooms >= parseInt(filters.minBedrooms, 10);
       const matchesMaxBedrooms =
         !filters.maxBedrooms || property.bedrooms <= parseInt(filters.maxBedrooms, 10);
-      const matchespropertyDate = new Date(
-        property.added.year, getMonthIndex(property.added.month), property.added.day
-      );
-      const matchesStartDate = !filters.startDate || propertyDate >= new Date(filters.startDate);
-      const matchEndDate = !filters.endDate || propertyDate <= new Date(filters.endDate);
-
+      const matchesAddedMonth =
+        !filters.addedMonth || property.added.month.toLowerCase() === filters.addedMonth.toLowerCase();
+      const matchesAddedYear =
+        !filters.addedYear || property.added.year.toString() === filters.addedYear;
       const matchesPostcode =
-        !filters.postcodeArea ||
-        property.postcode.toLowerCase().startsWith(filters.postcodeArea.toLowerCase());
+        !filters.postcode ||
+        property.location.toLowerCase().includes(filters.postcode.toLowerCase());
 
       return (
         matchesType &&
@@ -128,15 +111,11 @@ const validateFilters = () => {
         matchesMaxPrice &&
         matchesMinBedrooms &&
         matchesMaxBedrooms &&
-        matchesStartDate &&
-        matchesEndDate &&
-        matchesPostcodeArea
+        matchesAddedMonth &&
+        matchesAddedYear &&
+        matchesPostcode
       );
     });
-
-    function getMonthIndex(monthName) {
-      return new Date(Date.parse(monthName + "1, 2025")).getMonth();
-    }
 
     setFilteredProperties(filtered);
   };
@@ -171,7 +150,7 @@ const validateFilters = () => {
 
   return (
     <Box sx={{ padding: "20px", maxWidth: "1400px", margin: "0 auto" }}>
-      <Typography variant="h4" align="center" gutterBottom sx={{ color: "#1e40af", fontWeight: "bold", marginBottom: "2rem" }}>
+      <Typography variant="h4" align="center" gutterBottom sx={{ color: "#4528ffff", fontWeight: "bold", marginBottom: "2rem" }}>
         Search Your Dream Home
       </Typography>
       
@@ -186,7 +165,7 @@ const validateFilters = () => {
         }}
         onSubmit={handleSearch}
       >
-        <Grid container spacing={2} className="favourites-grid">
+        <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <TextField
               label="Property Type"
@@ -203,7 +182,7 @@ const validateFilters = () => {
           </Grid>
           <Grid item xs={12} md={4}>
             <TextField
-              label="Min Price in Millions (Rs.)"
+              label="Min Price (£.)"
               name="minPrice"
               type="number"
               value={filters.minPrice}
@@ -213,7 +192,7 @@ const validateFilters = () => {
           </Grid>
           <Grid item xs={12} md={4}>
             <TextField
-              label="Max Price in Millions (Rs.)"
+              label="Max Price (£.)"
               name="maxPrice"
               type="number"
               value={filters.maxPrice}
@@ -262,9 +241,9 @@ const validateFilters = () => {
           </Grid>
           <Grid item xs={12} md={4}>
             <TextField
-              label="Location"
-              name="postcode"
-              value={filters.postcode}
+              label="Post Code Area (Ex: BR6, NW1)"
+              name="postcodearea"
+              value={filters.postcodearea}
               onChange={handleInputChange}
               fullWidth
             />
@@ -276,9 +255,9 @@ const validateFilters = () => {
               fullWidth
               sx={{ 
                 height: "56px",
-                backgroundColor: "#4d5df2ff",
+                backgroundColor: "#156ff5ff",
                 '&:hover': {
-                  backgroundColor: "#3a3df0ff",
+                  backgroundColor: "#1f75ffff",
                 }
               }}
             >
@@ -300,7 +279,7 @@ const validateFilters = () => {
         onDrop={handleDrop}
         onDragOver={handleDragOver}
       >
-        <Typography variant="h5" gutterBottom sx={{ color: "#1e40af", fontWeight: "bold" }}>
+        <Typography variant="h5" gutterBottom sx={{ color: "#2575f7ff", fontWeight: "bold" }}>
           Favourites
         </Typography>
         <Button
@@ -322,30 +301,26 @@ const validateFilters = () => {
         </Button>
         <Grid container spacing={2}>
           {favourites.map((property) => (
-            <Grid item xs={12} sm={6} md={4} key={property.id}>
-              <Card className="property-card">
+            <Grid item xs={12} sm={6} md={4} key={property.id} sx={{ display: 'flex' }}>
+              <Card className="property-card" sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
                 <div className="card-media-wrapper">
-                  CardMedia
+                  <CardMedia
                     component="img"
-                    height="220"
                     image={property.picture}
-                    alt="Property"
-                  
-                  <div className="price-badge">Rs. {property.price.toLocaleString()}m</div>
-                  <div className="type-badge">{property.type}</div>
+                    alt={property.short}
+                  />
                 </div>
                 <CardContent>
-                  <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                    {property.short}
+                  <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                    £. {property.price.toLocaleString()} 
                   </Typography>
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
-                    <IconButton
-                      onClick={() => removeFavourite(property.id)}
-                      color="error"
-                    >
-                      <Trash />
-                    </IconButton>
-                  </div>
+                  <Typography>{property.short}</Typography>
+                  <IconButton
+                    onClick={() => removeFavourite(property.id)}
+                    color="error"
+                  >
+                    <Trash />
+                  </IconButton>
                 </CardContent>
               </Card>
             </Grid>
@@ -355,64 +330,52 @@ const validateFilters = () => {
 
       <Divider sx={{ marginY: "20px", borderColor: "#ddd" }} />
 
-      <Typography variant="h5" gutterBottom sx={{ color: "#1e40af", fontWeight: "bold" }}>
+      <Typography variant="h5" gutterBottom sx={{ color: "#2a4dfdff", fontWeight: "bold" }}>
         Search Results
       </Typography>
-      <Grid container spacing={2} className="properties-grid">
+      <Grid container spacing={2}>
         {filteredProperties.map((property) => (
-          <Grid
-            item
-            xs={12}
-            sm={6}
-            md={4}
-            key={property.id}
-            draggable
-            onDragStart={(e) => handleDragStart(e, property)}
-          >
-            <Card className="property-card">
-                <div className="card-media-wrapper">
+          <Grid item xs={12} sm={6} md={4} key={property.id} sx={{ display: 'flex' }} draggable onDragStart={(e) => handleDragStart(e, property)}>
+            <Card className="property-card" sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+              <div className="card-media-wrapper">
                 <CardMedia
                   component="img"
-                  height="220"
                   image={property.picture}
-                  alt="Property"
+                  alt={property.short}
                 />
-                <div className="price-badge">Rs. {property.price.toLocaleString()}m</div>
-                <div className="type-badge">{property.type}</div>
               </div>
               <CardContent>
-                <Typography variant="body1" sx={{ fontWeight: 700 }}>
-                  {property.short}
+                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                  £. {property.price.toLocaleString()} 
                 </Typography>
-                <Box sx={{ display: "flex", alignItems: "center", marginTop: "1rem", justifyContent: 'space-between' }}>
-                  <div>
-                    <IconButton
-                      onClick={() => addToFavourites(property)}
-                      sx={{
-                        color: favourites.some((fav) => fav.id === property.id)
-                          ? "#d32f2f"
-                          : "#aaa",
-                      }}
-                    >
-                      <Heart />
-                    </IconButton>
-                    <Button
-                      component={Link}
-                      to={`/property/${property.id}`}
-                      variant="outlined"
-                      sx={{ 
-                        marginLeft: 1,
-                        color: "#1e40af",
-                        borderColor: "#1e40af",
-                        '&:hover': {
-                          borderColor: "#5a3d80",
-                          backgroundColor: "rgba(106, 76, 147, 0.1)"
-                        }
-                      }}
-                    >
-                      View Details
-                    </Button>
-                  </div>
+                <Typography>{property.short}</Typography>
+                <Box sx={{ display: "flex", alignItems: "center", marginTop: "1rem" }}>
+                  <IconButton
+                    onClick={() => addToFavourites(property)}
+                    sx={{
+                      color: favourites.some((fav) => fav.id === property.id)
+                        ? "#d32f2f"
+                        : "#aaa",
+                    }}
+                  >
+                    <Heart />
+                  </IconButton>
+                  <Button
+                    component={Link}
+                    to={`/property/${property.id}`}
+                    variant="outlined"
+                    sx={{ 
+                      marginLeft: 1,
+                      color: "#1c4ff8ff",
+                      borderColor: "#3905e5ff",
+                      '&:hover': {
+                        borderColor: "#0e015dff",
+                        backgroundColor: "rgba(106, 76, 147, 0.1)"
+                      }
+                    }}
+                  >
+                    View Details
+                  </Button>
                 </Box>
               </CardContent>
             </Card>
