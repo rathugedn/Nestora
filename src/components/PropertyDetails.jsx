@@ -31,9 +31,20 @@ const PropertyDetails = () => {
           &larr; Back to Search
         </button>
 
-        <h1>{property.type}</h1>
+        <header className="property-header">
+  <div className="property-header-left">
+    <h1>{property.type} in {property.location.split(',').pop()}</h1>
+    <h2 className="price-tag">£{property.price.toLocaleString()}</h2>
+  </div>
+  
+  {/* This is the badge that will stay in the corner */}
+  <span className="type-badge">
+    {property.type}
+  </span>
+</header>
 
-        <div className="property-gallery">
+        
+          <div className="property-gallery">
           <img src={property.img1} alt="Gallery 1" />
           <img src={property.img2} alt="Gallery 2" />
           <img src={property.img3} alt="Gallery 3" />
@@ -43,69 +54,90 @@ const PropertyDetails = () => {
           <img src={property.img7} alt="Gallery 7" />
           
         </div>
+        
 
         <div className="property-info">
-          <p>
-            Price: <span>Rs. {property.price.toLocaleString()} million</span>
-          </p>
-          <p>
-            Bedrooms: <span>{property.bedrooms}</span>
-          </p>
-          <p>
-            Bathrooms: <span>{property.bathrooms}</span>
-          </p>
-          <p>
-            Area: <span>{property.area} perches</span>
-          </p>
-          <p>
-            Location: <span>{property.location}</span>
-          </p>
-        </div>
+  <div className="info-item">
+    <strong>Price:</strong> 
+    <span>£{property.price.toLocaleString()}</span>
+  </div>
+  
+  <div className="info-item">
+    <strong>Bedrooms:</strong> 
+    <span>{property.bedrooms}</span>
+  </div>
+  
+  <div className="info-item">
+    <strong>Tenure:</strong> 
+    <span>{property.tenure}</span>
+  </div>
+  
+  <div className="info-item">
+    <strong>Postcode Area:</strong> 
+    {/* Extracts the last part of the location string, e.g., BR6 */}
+    <span>{property.location.split(' ').pop()}</span> 
+  </div>
 
-        <div className="tabs">
-          <button
-            className={activeTab === "description" ? "active" : ""}
-            onClick={() => setActiveTab("description")}
-          >
-            Description
-          </button>
-          <button
-            className={activeTab === "floorPlan" ? "active" : ""}
-            onClick={() => setActiveTab("floorPlan")}
-          >
-            Floor Plan
-          </button>
-          <button
-            className={activeTab === "map" ? "active" : ""}
-            onClick={() => setActiveTab("map")}
-          >
-            Map
-          </button>
-        </div>
+  <div className="info-item full-width">
+    <strong>Full Address:</strong> 
+    <span>{property.location}</span>
+  </div>
 
-        <div className="tab-content">
-          {activeTab === "description" && (
-            <div className="description">
-              <p>{property.description}</p>
-            </div>
-          )}
-          {activeTab === "floorPlan" && (
-            <div className="floor-plan">
-              <img src={property.floorMap} alt="Floor Plan" />
-            </div>
-          )}
-          {activeTab === "map" && (
-            <div className="map">
-              <iframe
-                src={property.map}
-                width="100%"
-                height="400"
-                allowFullScreen
-                loading="lazy"
-                title="Property Map"
-              ></iframe>
-            </div>
-          )}
+  <div className="info-item">
+    <strong>Date Added:</strong> 
+    <span>{property.added.day} {property.added.month} {property.added.year}</span>
+  </div>
+</div>
+
+        {/* Tab System */}
+        <div className="tabs-container">
+          <div className="tab-buttons">
+            <button
+              className={activeTab === "description" ? "active" : ""}
+              onClick={() => setActiveTab("description")}
+            >
+              Description
+            </button>
+            <button
+              className={activeTab === "floorPlan" ? "active" : ""}
+              onClick={() => setActiveTab("floorPlan")}
+            >
+              Floor Plan
+            </button>
+            <button
+              className={activeTab === "map" ? "active" : ""}
+              onClick={() => setActiveTab("map")}
+            >
+              Google Map
+            </button>
+          </div>
+
+          <div className="tab-content">
+            {activeTab === "description" && (
+              <div className="description-text">
+                <h3>Property Overview</h3>
+                <p>{property.description}</p>
+              </div>
+            )}
+            {activeTab === "floorPlan" && (
+              <div className="floor-plan-view">
+                <img src={property.floorMap} alt="Property Floor Plan" />
+              </div>
+            )}
+            {activeTab === "map" && (
+              <div className="map-view">
+                <iframe
+                  src={property.map}
+                  width="100%"
+                  height="450"
+                  style={{ border: 0 }}
+                  allowFullScreen=""
+                  loading="lazy"
+                  title="Location Map"
+                ></iframe>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
