@@ -44,14 +44,14 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover; /* fill the card area */
+  object-fit: cover; 
 }
 
 .price-badge {
   position: absolute;
   left: 12px;
   top: 12px;
-  background: linear-gradient(90deg,#ff8a65,#ff5252);
+  background: linear-gradient(90deg,#412218,#ff5252);
   color: #fff;
   padding: 6px 10px;
   border-radius: 10px;
@@ -74,7 +74,7 @@
 
 .property-card .MuiCardContent-root {
   padding: 16px;
-  flex: 1; /* allow content area to stretch */
+  flex: 1; 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
