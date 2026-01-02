@@ -69,11 +69,11 @@ const SearchPage = () => {
       return false;
       
     }
-    if (filters.minPrice > filters.maxPrice) {
+    if (filters.minPrice && filters.maxPrice && filters.minPrice > filters.maxPrice) {
       alert("Min Price cannot be greater than Max Price.");
       return false;
     }
-    if (filters.minBedrooms > filters.maxBedrooms) {
+    if (filters.minBedrooms && filters.maxBedrooms && filters.minBedrooms > filters.maxBedrooms) {
       alert("Min Bedrooms cannot be greater than Max Bedrooms.");
       return false;
     }
@@ -120,6 +120,16 @@ const SearchPage = () => {
     setFilteredProperties(filtered);
   };
 
+  const toggleFavourite = (property) => {
+    const isFavourite = favourites.some((fav) => fav.id === property.id);
+    
+    if (isFavourite) {
+      setFavourites(favourites.filter((fav) => fav.id !== property.id));
+    } else {
+      setFavourites([...favourites, property]);
+    }
+  };
+
   const addToFavourites = (property) => {
     if (!favourites.some((fav) => fav.id === property.id)) {
       setFavourites([...favourites, property]);
@@ -148,23 +158,17 @@ const SearchPage = () => {
     e.preventDefault();
   };
 
+  const isFavourite = (propertyId) => {
+    return favourites.some((fav) => fav.id === propertyId);
+  };
+
   return (
-    <Box sx={{ padding: "20px", maxWidth: "1400px", margin: "0 auto" }}>
-      <Typography variant="h4" align="center" gutterBottom sx={{ color: "#4528ffff", fontWeight: "bold", marginBottom: "2rem" }}>
+    <Box className="search-page-container">
+      <Typography variant="h4" align="center" gutterBottom className="page-title">
         Search Your Dream Home
       </Typography>
       
-      <Box
-        component="form"
-        sx={{
-          backgroundColor: "#fff",
-          padding: "20px",
-          borderRadius: "10px",
-          boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
-          marginBottom: "30px",
-        }}
-        onSubmit={handleSearch}
-      >
+      <Box component="form" className="search-form" onSubmit={handleSearch}>
         <Grid container spacing={2}>
           <Grid item xs={12} md={4}>
             <TextField
@@ -242,101 +246,98 @@ const SearchPage = () => {
           <Grid item xs={12} md={4}>
             <TextField
               label="Post Code Area (Ex: BR6, NW1)"
-              name="postcodearea"
-              value={filters.postcodearea}
+              name="postcode"
+              value={filters.postcode}
               onChange={handleInputChange}
               fullWidth
             />
           </Grid>
           <Grid item xs={12} md={4}>
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              sx={{ 
-                height: "56px",
-                backgroundColor: "#156ff5ff",
-                '&:hover': {
-                  backgroundColor: "#1f75ffff",
-                }
-              }}
-            >
+            <Button type="submit" variant="contained" fullWidth className="search-button">
               Search
             </Button>
           </Grid>
         </Grid>
       </Box>
 
-      <Divider sx={{ marginY: "20px", borderColor: "#ddd" }} />
+      <Divider className="section-divider" />
 
-      <Box
-        sx={{
-          padding: "20px",
-          backgroundColor: "#f9f6ff",
-          borderRadius: "10px",
-          marginBottom: "30px",
-        }}
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-      >
-        <Typography variant="h5" gutterBottom sx={{ color: "#2575f7ff", fontWeight: "bold" }}>
-          Favourites
+      <Box className="favourites-section" onDrop={handleDrop} onDragOver={handleDragOver}>
+        <Typography variant="h5" gutterBottom className="section-title">
+          Favourites ({favourites.length})
         </Typography>
         <Button
           variant="contained"
           onClick={clearFavourites}
           disabled={favourites.length === 0}
-          sx={{ 
-            marginBottom: "10px",
-            backgroundColor: "#d32f2f",
-            '&:hover': {
-              backgroundColor: "#b71c1c",
-            },
-            '&:disabled': {
-              backgroundColor: "#f5f5f5",
-            }
-          }}
+          className="clear-favourites-button"
         >
           Clear Favourites
         </Button>
-        <Grid container spacing={2}>
-          {favourites.map((property) => (
-            <Grid item xs={12} sm={6} md={4} key={property.id} sx={{ display: 'flex' }}>
-              <Card className="property-card" sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-                <div className="card-media-wrapper">
-                  <CardMedia
-                    component="img"
-                    image={property.picture}
-                    alt={property.short}
-                  />
-                </div>
-                <CardContent>
-                  <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                    £. {property.price.toLocaleString()} 
-                  </Typography>
-                  <Typography>{property.short}</Typography>
-                  <IconButton
-                    onClick={() => removeFavourite(property.id)}
-                    color="error"
-                  >
-                    <Trash />
-                  </IconButton>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
+        {favourites.length === 0 ? (
+          <Typography className="empty-favourites-message">
+            No favourites yet. Click the heart icon or drag properties here to add them!
+          </Typography>
+        ) : (
+          <Grid container spacing={2} justifyContent="center">
+            {favourites.map((property) => (
+              <Grid item xs={12} sm={6} md={4} key={property.id} className="grid-item-center">
+                <Card className="property-card">
+                  <div className="card-media-wrapper">
+                    <CardMedia
+                      component="img"
+                      image={property.picture}
+                      alt={property.short}
+                    />
+                  </div>
+                  <CardContent>
+                    <Typography variant="h6" className="property-price">
+                      £. {property.price.toLocaleString()} 
+                    </Typography>
+                    <Typography>{property.short}</Typography>
+                    <Box className="property-actions">
+                      <IconButton
+                        onClick={() => removeFavourite(property.id)}
+                        color="error"
+                        title="Remove from favourites"
+                      >
+                        <Trash />
+                      </IconButton>
+                      <Button
+                        component={Link}
+                        to={`/property/${property.id}`}
+                        variant="outlined"
+                        className="view-details-button"
+                      >
+                        View Details
+                      </Button>
+                    </Box>
+                  </CardContent>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
+        )}
       </Box>
 
-      <Divider sx={{ marginY: "20px", borderColor: "#ddd" }} />
+      <Divider className="section-divider" />
 
-      <Typography variant="h5" gutterBottom sx={{ color: "#2a4dfdff", fontWeight: "bold" }}>
-        Search Results
+      <Typography variant="h5" gutterBottom className="section-title results-title">
+        Search Results ({filteredProperties.length})
       </Typography>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} justifyContent="center">
         {filteredProperties.map((property) => (
-          <Grid item xs={12} sm={6} md={4} key={property.id} sx={{ display: 'flex' }} draggable onDragStart={(e) => handleDragStart(e, property)}>
-            <Card className="property-card" sx={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+          <Grid 
+            item 
+            xs={12} 
+            sm={6} 
+            md={4} 
+            key={property.id} 
+            className="grid-item-center" 
+            draggable 
+            onDragStart={(e) => handleDragStart(e, property)}
+          >
+            <Card className="property-card">
               <div className="card-media-wrapper">
                 <CardMedia
                   component="img"
@@ -345,34 +346,23 @@ const SearchPage = () => {
                 />
               </div>
               <CardContent>
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
+                <Typography variant="h6" className="property-price">
                   £. {property.price.toLocaleString()} 
                 </Typography>
                 <Typography>{property.short}</Typography>
-                <Box sx={{ display: "flex", alignItems: "center", marginTop: "1rem" }}>
+                <Box className="property-actions">
                   <IconButton
-                    onClick={() => addToFavourites(property)}
-                    sx={{
-                      color: favourites.some((fav) => fav.id === property.id)
-                        ? "#d32f2f"
-                        : "#aaa",
-                    }}
+                    onClick={() => toggleFavourite(property)}
+                    className={`favourite-button ${isFavourite(property.id) ? 'is-favourite' : ''}`}
+                    title={isFavourite(property.id) ? "Remove from favourites" : "Add to favourites"}
                   >
-                    <Heart />
+                    <Heart fill={isFavourite(property.id) ? "#d32f2f" : "none"} />
                   </IconButton>
                   <Button
                     component={Link}
                     to={`/property/${property.id}`}
                     variant="outlined"
-                    sx={{ 
-                      marginLeft: 1,
-                      color: "#1c4ff8ff",
-                      borderColor: "#3905e5ff",
-                      '&:hover': {
-                        borderColor: "#0e015dff",
-                        backgroundColor: "rgba(106, 76, 147, 0.1)"
-                      }
-                    }}
+                    className="view-details-button"
                   >
                     View Details
                   </Button>

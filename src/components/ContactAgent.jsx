@@ -8,7 +8,7 @@ const AGENTS = [
         id: 'olivia',
         name: 'Olivia Parker',
         title: 'Senior Property Consultant',
-        phone: '+94 77678490',
+        phone: '+134 77678490',
         email: 'olivia@nestora.com',
         img: oliviaImg,
         
@@ -17,7 +17,7 @@ const AGENTS = [
         id: 'ethan',
         name: 'Ethan Brooks',
         title: 'Luxury Home Specialist',
-        phone: '+94 77678491',
+        phone: '+134 77678491',
         email: 'ethan@nestora.com',
         img: ethanImg,
     },
