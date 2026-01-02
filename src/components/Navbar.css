@@ -1,128 +1,126 @@
+/* Updated navbar to new vibrant blue color scheme */
+
 .navbar {
-  position: fixed;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  background: linear-gradient(90deg, #87CEEB 0%, #00BFFF 100%);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(3, 115, 186, 0.08);
   z-index: 1000;
+  border-bottom: 1px solid #e0f2fe; /* Updated border color */
 }
 
 .navbar-container {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 1rem 5%;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  padding: 0.8rem 1rem;
+  align-items: center;
 }
 
 .logo {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2563eb; /* Updated logo text color */
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
 }
 
 .logo-icon {
-  width: 38px;
-  height: 38px;
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #0ea5e9, #2563eb); /* Updated gradient colors */
+  color: #ffffff;
   border-radius: 8px;
-  background: linear-gradient(90deg,#3B5BFF,#2563EB);
-  color: #fff;
   font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.25); /* Updated box shadow color */
 }
 
 .logo-text {
-  font-weight: 800;
-  color: #0f172a;
-  font-size: 1.75rem;
+  color: #2563eb; /* Updated logo text color */
 }
 
 .nav-items {
   display: flex;
-  gap: 1.5rem;
+  gap: 2rem;
   align-items: center;
-  transition: transform 0.22s ease, opacity 0.22s ease;
 }
 
 .nav-link {
-  color: #334155;
   text-decoration: none;
-  font-weight: 600;
-  padding: 0.35rem 0.2rem;
-  border-bottom: 2px solid transparent;
-  transition: color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+  color: #475569; /* Updated nav links color */
+  font-weight: 500;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #000000; /* Updated underline color */
+  transition: width 0.3s ease;
 }
 
 .nav-link:hover {
-  color: #2563EB;
-  border-bottom-color: #2563EB;
+  color: #000000; /* Updated hover color */
 }
 
-.nav-link:focus {
-  outline: 3px solid rgba(37,99,235,0.14);
-  border-radius: 4px;
-  transform: translateY(-2px);
-}
-
-.nav-link[aria-current="page"] {
-  color: #0f4df9;
-  border-bottom-color: #1e3a8a;
+.nav-link:hover::after {
+  width: 100%;
 }
 
 .mobile-menu-btn {
   display: none;
-  background: transparent;
+  background: none;
   border: none;
   cursor: pointer;
-}
-
-.mobile-menu-btn:hover {
-  transform: scale(1.03);
-}
-.mobile-menu-btn:focus {
-  outline: 3px solid rgba(37,99,235,0.14);
-  border-radius: 6px;
+  padding: 0.5rem;
+  color: #2563eb; /* Updated menu button color */
 }
 
 @media (max-width: 768px) {
   .nav-items {
-    display: flex;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: rgba(255,255,255,0.98);
+    position: fixed;
+    top: 70px;
+    right: -100%;
     flex-direction: column;
+    background: #ffffff;
+    width: 70%;
+    height: calc(100vh - 70px);
+    padding: 2rem;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
     align-items: flex-start;
-    padding: 0.75rem 1rem;
-    gap: 0.5rem;
-    box-shadow: 0 6px 18px rgba(11,61,145,0.06);
-    max-height: 0;
-    overflow: hidden;
-    opacity: 0;
-    transform: translateY(-6px);
-    transition: max-height 0.28s ease, opacity 0.22s ease, transform 0.22s ease;
-  }
-  .mobile-menu-btn {
-    display: inline-block;
+    gap: 1.5rem;
+    border-left: 1px solid #e0f2fe; /* Updated border color */
   }
 
   .nav-items.mobile-open {
-    max-height: 420px; 
-    opacity: 1;
-    transform: translateY(0);
+    right: 0;
+  }
+
+  .mobile-menu-btn {
+    display: block;
   }
 
   .nav-link {
+    font-size: 1.1rem;
     width: 100%;
-    padding: 0.7rem 0.5rem;
-    border-bottom: none;
+    padding: 0.75rem 0;
   }
 }
