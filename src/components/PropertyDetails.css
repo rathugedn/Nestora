@@ -45,7 +45,7 @@
 }
 
 .type-badge {
-  background-color: #4e56f3;
+  background-color: #7b7dad;
   color: #fff;
   padding: 8px 16px;
   border-radius: 20px;
@@ -98,7 +98,7 @@
   border-radius: 12px;
   padding: 18px;
   display: flex;
-  flex-direction: column; /* Stacks Label over Value */
+  flex-direction: column; 
   gap: 5px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: default;
@@ -126,7 +126,7 @@
 }
 
 .info-card:first-child .info-value {
-  color: #4e56f3;
+  color: #10111a;
 }
 
 .full-address {
