@@ -71,9 +71,8 @@
   transform: translateY(-2px);
 }
 
-/* Active link detection via aria-current (React Router NavLink sets this) */
 .nav-link[aria-current="page"] {
-  color: #1e3a8a;
+  color: #0f4df9;
   border-bottom-color: #1e3a8a;
 }
 
@@ -93,7 +92,6 @@
 }
 
 @media (max-width: 768px) {
-  /* Collapse nav items behind a toggle on mobile but keep them animatable */
   .nav-items {
     display: flex;
     position: absolute;
@@ -116,9 +114,8 @@
     display: inline-block;
   }
 
-  /* When mobile menu is open (class added in JSX), reveal items */
   .nav-items.mobile-open {
-    max-height: 420px; /* enough for the menu items */
+    max-height: 420px; 
     opacity: 1;
     transform: translateY(0);
   }

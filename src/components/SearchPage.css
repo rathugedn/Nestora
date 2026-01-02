@@ -1,12 +1,3 @@
-.properties-grid, .favourites-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
 .property-card {
   display: flex;
   flex-direction: column;
@@ -15,6 +6,7 @@
   overflow: hidden;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  height: 400px;
 }
 
 .property-card:hover {
@@ -33,6 +25,7 @@
   width: 100%;
   overflow: hidden;
   height: 220px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -44,27 +37,27 @@
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover; 
+  object-fit: cover;
 }
 
 .price-badge {
   position: absolute;
   left: 12px;
   top: 12px;
-  background: linear-gradient(90deg,#412218,#ff5252);
+  background: linear-gradient(90deg, #412218, #ff5252);
   color: #fff;
   padding: 6px 10px;
   border-radius: 10px;
   font-weight: 700;
   font-size: 0.95rem;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.18);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
 }
 
 .type-badge {
   position: absolute;
   right: 12px;
   top: 12px;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   color: #fff;
   padding: 6px 10px;
   border-radius: 10px;
@@ -74,12 +67,36 @@
 
 .property-card .MuiCardContent-root {
   padding: 16px;
-  flex: 1; 
+  flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 0;
 }
 
-.property-card h6, .property-card .MuiTypography-root {
+.property-card h6,
+.property-card .MuiTypography-root {
   color: var(--primary-blue);
+}
+
+@media (max-width: 992px) {
+  .properties-grid,
+  .favourites-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .properties-grid,
+  .favourites-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .property-card {
+    height: 380px;
+  }
+
+  .card-media-wrapper {
+    height: 200px;
+  }
 }

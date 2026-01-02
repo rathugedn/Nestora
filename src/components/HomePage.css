@@ -106,12 +106,11 @@
 }
 
 .hero-content h1 span {
-  /* legacy selector — keep for compatibility */
   color: #3b82f6;
 }
 
 .luxury-gradient {
-  background: linear-gradient(90deg,#7c3aed,#3b82f6,#06b6d4);
+  background: linear-gradient(90deg,#2e4cf8,#3b82f6,#06b6d4);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -119,7 +118,7 @@
 
 .hero-content p {
   font-size: 1.2rem;
-  color: rgba(30,64,175,0.85);
+  color: rgba(0, 0, 0, 0.85);
   max-width: 500px;
   margin-bottom: 2.5rem;
   line-height: 1.6;
