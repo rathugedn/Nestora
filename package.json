@@ -12,8 +12,7 @@
     "test:coverage": "jest --coverage",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
-  
-},
+  },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
