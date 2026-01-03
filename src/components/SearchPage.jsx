@@ -67,7 +67,6 @@ const SearchPage = () => {
     ) {
       alert("Values cannot be negative.");
       return false;
-      
     }
     if (filters.minPrice && filters.maxPrice && filters.minPrice > filters.maxPrice) {
       alert("Min Price cannot be greater than Max Price.");
@@ -163,8 +162,8 @@ const SearchPage = () => {
   };
 
   return (
-    <Box className="search-page-container">
-      <Typography variant="h4" align="center" gutterBottom className="page-title">
+    <div className="search-page-container">
+      <Typography variant="h4" align="center" className="page-title">
         Search Your Dream Home
       </Typography>
       
@@ -186,7 +185,7 @@ const SearchPage = () => {
           </Grid>
           <Grid item xs={12} md={4}>
             <TextField
-              label="Min Price (£.)"
+              label="Min Price ($.)"
               name="minPrice"
               type="number"
               value={filters.minPrice}
@@ -196,7 +195,7 @@ const SearchPage = () => {
           </Grid>
           <Grid item xs={12} md={4}>
             <TextField
-              label="Max Price (£.)"
+              label="Max Price ($.)"
               name="maxPrice"
               type="number"
               value={filters.maxPrice}
@@ -245,7 +244,7 @@ const SearchPage = () => {
           </Grid>
           <Grid item xs={12} md={4}>
             <TextField
-              label="Post Code Area (Ex: BR6, NW1)"
+              label="Location"
               name="postcode"
               value={filters.postcode}
               onChange={handleInputChange}
@@ -263,7 +262,7 @@ const SearchPage = () => {
       <Divider className="section-divider" />
 
       <Box className="favourites-section" onDrop={handleDrop} onDragOver={handleDragOver}>
-        <Typography variant="h5" gutterBottom className="section-title">
+        <Typography variant="h5" className="section-title">
           Favourites ({favourites.length})
         </Typography>
         <Button
@@ -279,100 +278,113 @@ const SearchPage = () => {
             No favourites yet. Click the heart icon or drag properties here to add them!
           </Typography>
         ) : (
-          <Grid container spacing={2} justifyContent="center">
+          <div className="favourites-grid">
             {favourites.map((property) => (
-              <Grid item xs={12} sm={6} md={4} key={property.id} className="grid-item-center">
-                <Card className="property-card">
-                  <div className="card-media-wrapper">
-                    <CardMedia
-                      component="img"
-                      image={property.picture}
-                      alt={property.short}
-                    />
+              <Card key={property.id} className="property-card">
+                <div className="card-media-wrapper">
+                  <CardMedia
+                    component="img"
+                    image={property.picture}
+                    alt={property.short}
+                  />
+                  <div className="price-badge">
+                    £. {property.price.toLocaleString()}
                   </div>
-                  <CardContent>
-                    <Typography variant="h6" className="property-price">
-                      £. {property.price.toLocaleString()} 
-                    </Typography>
-                    <Typography>{property.short}</Typography>
-                    <Box className="property-actions">
-                      <IconButton
-                        onClick={() => removeFavourite(property.id)}
-                        color="error"
-                        title="Remove from favourites"
-                      >
-                        <Trash />
-                      </IconButton>
-                      <Button
-                        component={Link}
-                        to={`/property/${property.id}`}
-                        variant="outlined"
-                        className="view-details-button"
-                      >
-                        View Details
-                      </Button>
-                    </Box>
-                  </CardContent>
-                </Card>
-              </Grid>
+                  <div className="type-badge">{property.type}</div>
+                </div>
+                <CardContent>
+                  <Typography variant="h6">
+                    {property.short}
+                  </Typography>
+                  <Typography variant="body2">
+                    {property.bedrooms} Bedrooms • {property.location}
+                  </Typography>
+                  <div className="property-card-actions">
+                    <IconButton
+                      onClick={() => removeFavourite(property.id)}
+                      color="error"
+                      title="Remove from favourites"
+                      size="small"
+                    >
+                      <Trash size={18} />
+                    </IconButton>
+                    <Button
+                      component={Link}
+                      to={`/property/£{property.id}`}
+                      variant="outlined"
+                      className="view-details-button"
+                      size="small"
+                      fullWidth
+                    >
+                      View Details
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
-          </Grid>
+          </div>
         )}
       </Box>
 
       <Divider className="section-divider" />
 
-      <Typography variant="h5" gutterBottom className="section-title results-title">
+      <Typography variant="h5" className="section-title">
         Search Results ({filteredProperties.length})
       </Typography>
-      <Grid container spacing={2} justifyContent="center">
+      <div className="properties-grid">
         {filteredProperties.map((property) => (
-          <Grid 
-            item 
-            xs={12} 
-            sm={6} 
-            md={4} 
-            key={property.id} 
-            className="grid-item-center" 
-            draggable 
+          <Card
+            key={property.id}
+            className="property-card"
+            draggable
             onDragStart={(e) => handleDragStart(e, property)}
           >
-            <Card className="property-card">
-              <div className="card-media-wrapper">
-                <CardMedia
-                  component="img"
-                  image={property.picture}
-                  alt={property.short}
-                />
+            <div className="card-media-wrapper">
+              <CardMedia
+                component="img"
+                image={property.picture}
+                alt={property.short}
+              />
+              <div className="price-badge">
+                $ {property.price.toLocaleString()}
               </div>
-              <CardContent>
-                <Typography variant="h6" className="property-price">
-                  £. {property.price.toLocaleString()} 
-                </Typography>
-                <Typography>{property.short}</Typography>
-                <Box className="property-actions">
-                  <IconButton
-                    onClick={() => toggleFavourite(property)}
-                    className={`favourite-button ${isFavourite(property.id) ? 'is-favourite' : ''}`}
-                    title={isFavourite(property.id) ? "Remove from favourites" : "Add to favourites"}
-                  >
-                    <Heart fill={isFavourite(property.id) ? "#d32f2f" : "none"} />
-                  </IconButton>
-                  <Button
-                    component={Link}
-                    to={`/property/${property.id}`}
-                    variant="outlined"
-                    className="view-details-button"
-                  >
-                    View Details
-                  </Button>
-                </Box>
-              </CardContent>
-            </Card>
-          </Grid>
+              <div className="type-badge">{property.type}</div>
+            </div>
+            <CardContent>
+              <Typography variant="h6">
+                {property.short}
+              </Typography>
+              <Typography variant="body2">
+                {property.bedrooms} Bedrooms • {property.location}
+              </Typography>
+              <div className="property-card-actions">
+                <IconButton
+                  onClick={() => toggleFavourite(property)}
+                  className={`favourite-button ${isFavourite(property.id) ? 'is-favourite' : ''}`}
+                  title={isFavourite(property.id) ? "Remove from favourites" : "Add to favourites"}
+                  size="small"
+                >
+                  <Heart 
+                    size={18}
+                    fill={isFavourite(property.id) ? "#ef4444" : "none"} 
+                  />
+                </IconButton>
+                <Button
+                  component={Link}
+                  to={`/property/£{property.id}`}
+                  variant="outlined"
+                  className="view-details-button"
+                  size="small"
+                  fullWidth
+                >
+                  View Details
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         ))}
-      </Grid>
-    </Box>
+      </div>
+    </div>
   );
 };
 
