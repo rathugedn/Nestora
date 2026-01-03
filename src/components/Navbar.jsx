@@ -18,7 +18,7 @@ const Navbar = ({ favouritesCount = 0 }) => {
           <span className="logo-text">Nestora</span>
         </Link>
         
-        <div className={`nav-items ${mobileMenuOpen ? 'mobile-open' : ''}`}>
+        <div className={`nav-items £{mobileMenuOpen ? 'mobile-open' : ''}`}>
           <Link to="/" className="nav-link" onClick={() => setMobileMenuOpen(false)}>
             <span>Home</span>
           </Link>
