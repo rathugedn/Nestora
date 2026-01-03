@@ -288,7 +288,7 @@ const SearchPage = () => {
                     alt={property.short}
                   />
                   <div className="price-badge">
-                    £. {property.price.toLocaleString()}
+                    $ {property.price.toLocaleString()}
                   </div>
                   <div className="type-badge">{property.type}</div>
                 </div>
@@ -310,7 +310,7 @@ const SearchPage = () => {
                     </IconButton>
                     <Button
                       component={Link}
-                      to={`/property/£{property.id}`}
+                      to={`/property/${property.id}`}
                       variant="outlined"
                       className="view-details-button"
                       size="small"
@@ -371,7 +371,7 @@ const SearchPage = () => {
                 </IconButton>
                 <Button
                   component={Link}
-                  to={`/property/£{property.id}`}
+                  to={`/property/${property.id}`}
                   variant="outlined"
                   className="view-details-button"
                   size="small"
