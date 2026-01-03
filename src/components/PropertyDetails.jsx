@@ -7,44 +7,99 @@ const PropertyDetails = () => {
   const navigate = useNavigate();
   const [property, setProperty] = useState(null);
   const [activeTab, setActiveTab] = useState("description");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    console.log('Loading property with ID:', id); // Debug log
+    
     fetch("/properties.json")
-      .then((response) => response.json())
-      .then((data) => {
-        const foundProperty = data.properties.find((prop) => prop.id === id);
-        setProperty(foundProperty);
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch properties');
+        }
+        return response.json();
       })
-      .catch((error) =>
-        console.error("Error fetching property details:", error)
-      );
+      .then((data) => {
+        console.log('All properties:', data.properties); // Debug log
+        
+        // FIX: Convert both to string for proper comparison
+        const foundProperty = data.properties.find(
+          (prop) => prop.id.toString() === id.toString()
+        );
+        
+        console.log('Found property:', foundProperty); // Debug log
+        
+        if (foundProperty) {
+          setProperty(foundProperty);
+        } else {
+          setError(`Property with ID ${id} not found`);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching property details:", error);
+        setError(error.message);
+        setLoading(false);
+      });
   }, [id]);
 
+  // Loading state
+  if (loading) {
+    return (
+      <div className="loading">
+        <div className="loading-spinner"></div>
+        <p>Loading property details...</p>
+        <p style={{ fontSize: '0.875rem', color: '#666' }}>Property ID: {id}</p>
+      </div>
+    );
+  }
+
+  // Error state
+  if (error) {
+    return (
+      <div className="error-container">
+        <h2>Error Loading Property</h2>
+        <p>{error}</p>
+        <button className="back-button" onClick={() => navigate("/")}>
+          &larr; Back to Search
+        </button>
+      </div>
+    );
+  }
+
+  // Property not found
   if (!property) {
-    return <div className="loading">Loading property details...</div>;
+    return (
+      <div className="error-container">
+        <h2>Property Not Found</h2>
+        <p>The property you're looking for doesn't exist or has been removed.</p>
+        <button className="back-button" onClick={() => navigate("/")}>
+          &larr; Back to Search
+        </button>
+      </div>
+    );
   }
 
   return (
     <div className="property-details-container">
       <div className="property-details">
-        <button className="back-button" onClick={() => navigate("/search")}>
+        <button className="back-button" onClick={() => navigate("/")}>
           &larr; Back to Search
         </button>
 
         <header className="property-header">
-  <div className="property-header-left">
-    <h1>{property.type} in {property.location.split(',').pop()}</h1>
-    <h2 className="price-tag">£{property.price.toLocaleString()}</h2>
-  </div>
-  
-  {/* This is the badge that will stay in the corner */}
-  <span className="type-badge">
-    {property.type}
-  </span>
-</header>
+          <div className="property-header-left">
+            <h1>{property.type} in {property.location.split(',').pop()}</h1>
+            <h2 className="price-tag">Rs. {property.price.toLocaleString()} millions</h2>
+          </div>
+          
+          <span className="type-badge">
+            {property.type}
+          </span>
+        </header>
 
-        
-          <div className="property-gallery">
+        <div className="property-gallery">
           <img src={property.img1} alt="Gallery 1" />
           <img src={property.img2} alt="Gallery 2" />
           <img src={property.img3} alt="Gallery 3" />
@@ -52,42 +107,39 @@ const PropertyDetails = () => {
           <img src={property.img5} alt="Gallery 5" />
           <img src={property.img6} alt="Gallery 6" />
           <img src={property.img7} alt="Gallery 7" />
-          
         </div>
-        
 
         <div className="property-info">
-  <div className="info-item">
-    <strong>Price:</strong> 
-    <span>£{property.price.toLocaleString()}</span>
-  </div>
-  
-  <div className="info-item">
-    <strong>Bedrooms:</strong> 
-    <span>{property.bedrooms}</span>
-  </div>
-  
-  <div className="info-item">
-    <strong>Tenure:</strong> 
-    <span>{property.tenure}</span>
-  </div>
-  
-  <div className="info-item">
-    <strong>Postcode Area:</strong> 
-    {/* Extracts the last part of the location string, e.g., BR6 */}
-    <span>{property.location.split(' ').pop()}</span> 
-  </div>
+          <div className="info-item">
+            <strong>Price:</strong> 
+            <span>Rs. {property.price.toLocaleString()} millions</span>
+          </div>
+          
+          <div className="info-item">
+            <strong>Bedrooms:</strong> 
+            <span>{property.bedrooms}</span>
+          </div>
+          
+          <div className="info-item">
+            <strong>Tenure:</strong> 
+            <span>{property.tenure}</span>
+          </div>
+          
+          <div className="info-item">
+            <strong>Location Area:</strong>
+            <span>{property.location.split(' ').pop()}</span> 
+          </div>
 
-  <div className="info-item full-width">
-    <strong>Full Address:</strong> 
-    <span>{property.location}</span>
-  </div>
+          <div className="info-item full-width">
+            <strong>Full Address:</strong> 
+            <span>{property.location}</span>
+          </div>
 
-  <div className="info-item">
-    <strong>Date Added:</strong> 
-    <span>{property.added.day} {property.added.month} {property.added.year}</span>
-  </div>
-</div>
+          <div className="info-item">
+            <strong>Date Added:</strong> 
+            <span>{property.added.day} {property.added.month} {property.added.year}</span>
+          </div>
+        </div>
 
         {/* Tab System */}
         <div className="tabs-container">
