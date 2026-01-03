@@ -91,7 +91,7 @@ const PropertyDetails = () => {
         <header className="property-header">
           <div className="property-header-left">
             <h1>{property.type} in {property.location.split(',').pop()}</h1>
-            <h2 className="price-tag">Rs. {property.price.toLocaleString()} millions</h2>
+            <h2 className="price-tag">$. {property.price.toLocaleString()} </h2>
           </div>
           
           <span className="type-badge">
@@ -112,7 +112,7 @@ const PropertyDetails = () => {
         <div className="property-info">
           <div className="info-item">
             <strong>Price:</strong> 
-            <span>Rs. {property.price.toLocaleString()} millions</span>
+            <span>$. {property.price.toLocaleString()} </span>
           </div>
           
           <div className="info-item">
