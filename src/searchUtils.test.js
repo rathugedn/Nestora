@@ -1,7 +1,3 @@
-// ============================================
-// 1. searchUtils.test.js - Search Logic Tests
-// ============================================
-
 import { filterProperties } from '../utils/searchUtils';
 
 const mockProperties = [
