@@ -26,7 +26,11 @@ const HomePage = () => {
         <div className="hero-right">
           <div className="image-stack single">
             <div className="image-card large">
-              <img src="/property.jpg" alt="Modern Home" />
+            
+              <img 
+                src={`${import.meta.env.BASE_URL}property.jpg`} 
+                alt="Modern Home" 
+              />
               <div className="card-overlay">
               </div>
             </div>
