@@ -1,0 +1,126 @@
+/* Updated navbar to new vibrant blue color scheme */
+
+.navbar {
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 1px solid #e0f2fe; /* Updated border color */
+}
+
+.navbar-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #2563eb; /* Updated logo text color */
+  transition: transform 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+}
+
+.logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(135deg, #0ea5e9, #2563eb); /* Updated gradient colors */
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 1.25rem;
+  box-shadow: 0 4px 10px rgba(14, 165, 233, 0.25); /* Updated box shadow color */
+}
+
+.logo-text {
+  color: #2563eb; /* Updated logo text color */
+}
+
+.nav-items {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #475569; /* Updated nav links color */
+  font-weight: 500;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #000000; /* Updated underline color */
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: #000000; /* Updated hover color */
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: #2563eb; /* Updated menu button color */
+}
+
+@media (max-width: 768px) {
+  .nav-items {
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    flex-direction: column;
+    background: #ffffff;
+    width: 70%;
+    height: calc(100vh - 70px);
+    padding: 2rem;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    align-items: flex-start;
+    gap: 1.5rem;
+    border-left: 1px solid #e0f2fe; /* Updated border color */
+  }
+
+  .nav-items.mobile-open {
+    right: 0;
+  }
+
+  .mobile-menu-btn {
+    display: block;
+  }
+
+  .nav-link {
+    font-size: 1.1rem;
+    width: 100%;
+    padding: 0.75rem 0;
+  }
+}
