@@ -1,0 +1,309 @@
+.contact-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.contact-container h1 {
+  color: var(--primary-blue);
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+
+.contact-subtitle {
+  text-align: center;
+  color: #333334;
+  margin-bottom: 3rem;
+  font-size: 1.2rem;
+}
+
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+  align-items: stretch;
+  grid-auto-rows: 1fr; /* make rows equal height */
+}
+
+.agent-card {
+  background: linear-gradient(180deg, #eaf6ff 0%, #dff3ff 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(11, 61, 145, 0.06);
+  transition: transform 0.28s ease, box-shadow 0.28s ease;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  min-height: 220px;
+}
+
+.agent-card:hover {
+  transform: translateY(-5px);
+}
+
+.agent-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem 0.5rem;
+}
+
+.agent-image {
+  width: 100%;
+  max-width: 220px; /* smaller profile image */
+  height: auto;
+  flex: 0 0 auto;
+  border-radius: 8px;
+  overflow: visible;
+  display: block;
+  background: #fff;
+  box-shadow: 0 6px 18px rgba(11,61,145,0.04);
+  margin: 0 auto;
+}
+
+.agent-image img {
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* show full photo without cropping */
+  display: block;
+  transition: transform 0.28s ease;
+}
+
+.agent-card:hover .agent-image img {
+  transform: scale(1.02);
+}
+
+.agent-info {
+  padding: 1rem 1.25rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* center content vertically */
+  align-items: center; /* center content horizontally */
+  text-align: center;
+}
+
+.agent-info h3 {
+  color: #063b7a;
+  margin: 0.4rem 0 0.2rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.agent-title {
+  color: #272626;
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.agent-contact {
+  margin: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #334155;
+  font-size: 0.95rem;
+}
+
+
+.contact-btn {
+  display: inline-block;
+  background: #1e88ff;
+  color: white;
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  margin-top: 0.75rem;
+  text-align: center;
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  font-weight: 600;
+  align-self: center; /* center button */
+  box-shadow: 0 6px 18px rgba(30,136,229,0.12);
+}
+
+.contact-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(30,136,229,0.16);
+}
+
+/* Make agent card keyboard focus visible */
+.agent-card:focus {
+  outline: 3px solid rgba(30,136,229,0.12);
+  transform: translateY(-6px);
+}
+
+.contact-form-section {
+  background: rgb(255, 255, 255);
+  padding: 1.1rem; /* reduced padding for compact form */
+  border-radius: 10px;
+  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.08);
+  margin-top: 2rem;
+  max-width: 820px; /* constrain form width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-form-section h2 {
+  color: var(--primary-blue);
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #555;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.6rem; /* slightly smaller inputs */
+  border: 1px solid #070707;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary-blue);
+}
+
+.submit-btn {
+  background: var(--primary-blue);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.2rem; /* smaller button */
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.22s ease;
+  width: 100%;
+  margin-top: 0.8rem;
+}
+
+.submit-btn:hover {
+  background: var(--primary-blue);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .contact-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-container h1 {
+    font-size: 2rem;
+  }
+
+  .agent-banner {
+    padding: 1rem;
+  }
+
+  .agent-image {
+    width: 120px;
+    height: auto;
+    flex: 0 0 auto;
+  }
+
+  .contact-form-section {
+    padding: 0.9rem;
+    margin-top: 1.25rem;
+  }
+}
+
+/* Modal styles for agent details */
+.agent-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agent-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+}
+
+.agent-modal-panel {
+  position: relative;
+  background: white;
+  border-radius: 12px;
+  max-width: 900px;
+  width: 95%;
+  z-index: 1001;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  padding: 1rem;
+}
+
+.modal-close {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  background: transparent;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.modal-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* larger image column */
+  gap: 1rem;
+  align-items: center;
+}
+
+.modal-image img {
+  width: 100%;
+  height: 100%;
+  max-height: 520px;
+  border-radius: 8px;
+  object-fit: contain;
+  cursor: zoom-in;
+}
+
+/* Lightbox for full-size images */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+.lightbox img {
+  max-width: 95%;
+  max-height: 95%;
+  border-radius: 8px;
+}
+
+.modal-info h2 {
+  margin-top: 0;
+  color: var(--primary-blue);
+}
+
+.modal-bio {
+  margin-top: 0.5rem;
+  color: #444;
+}
+
+@media (max-width: 720px) {
+  .modal-grid {
+    grid-template-columns: 1fr;
+  }
+}
